@@ -41,7 +41,7 @@
 
 //my function
 const validSolution = (board) => {
-    const checkRepeat = (checkArr) => {
+    checkRepeat = (checkArr) => {
         for (let i = 1; i <= 9; i++) {
             if (checkArr.indexOf(i) === -1) {
                 return false
@@ -50,7 +50,7 @@ const validSolution = (board) => {
         return true
     }
 
-    const createSquare = (thirdBoart) => {
+    createSquare = (thirdBoart) => {
         let _result = [[], [], []], _xMax = 3, _xMin = 0;
         for (let i = 0; i < 3; i++) {
             if (i > 0) _xMax += 3, _xMin += 3;
@@ -80,11 +80,16 @@ const validSolution = (board) => {
 //best function from CodeWars#1
 function validSolutionPerfect1(m) {
     const isValid = a => [1, 2, 3, 4, 5, 6, 7, 8, 9]
-        .every(n => a.indexOf(n) != -1) && a.length === 9, getBlockAsRow = n => Array(9)
-            .fill(0).map((_, i) => m[3 * ~~(n / 3) + ~~(i / 3)][(3 * n) % 9 + i % 3]);
+        .every(n => a.indexOf(n) != -1) && a.length === 9;
 
-    return m.every(r => isValid(r)) && m.map((_, i) => m.map(r => r[i]))
-        .every(r => isValid(r)) && m.map((_, i) => getBlockAsRow(i))
+    getBlockAsRow = n => Array(9)
+        .fill(0)
+        .map((_, i) => m[3 * ~~(n / 3) + ~~(i / 3)][(3 * n) % 9 + i % 3]);
+
+    return m.every(r => isValid(r)) &&
+        m.map((_, i) => m.map(r => r[i]))
+            .every(r => isValid(r)) &&
+        m.map((_, i) => getBlockAsRow(i))
             .every(r => isValid(r));
 }
 //best function from CodeWars#2
@@ -127,7 +132,7 @@ console.log(validSolution([
     [8, 9, 7, 2, 3, 1, 5, 6, 4],
     [9, 7, 8, 3, 1, 2, 6, 4, 5]]));
 
-console.log(validSolution([
+console.log(validSolutionPerfect1([
     [5, 3, 4, 6, 7, 8, 9, 1, 2],
     [6, 7, 2, 1, 9, 5, 3, 4, 8],
     [1, 9, 8, 3, 4, 2, 5, 6, 7],
